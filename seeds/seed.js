@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var db = require("../models");
 
-mongoose.connect("mongodb://localhost/transaction",
+mongoose.connect("mongodb://localhost/budget",
     {useNewUrlParser: true,
     useFindandModify: false,
     useUnifiedTopology: true}
@@ -9,18 +9,18 @@ mongoose.connect("mongodb://localhost/transaction",
 
 var transactionSeed = [
     {
-      name: "Food",
-      value: 200,
+      name: "pizza",
+      value: 15,
       date: new Date(Date.now())
     },
     {
-        name: "New Tires",
-        value: 800,
+        name: "house",
+        value: 300000,
         date: new Date(Date.now())
     },
     {
-        name: "Phone Bill",
-        value: 60,
+        name: "internet",
+        value: 75,
         date: new Date(Date.now())
     }
 ];
