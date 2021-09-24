@@ -19,11 +19,11 @@ request.onupgradeneeded = function (e) {
 };
 
 request.onerror = function (e) {
-  console.log(`Error ${e.target.errorCode}`);
+  console.log(`Woops! ${e.target.errorCode}`);
 };
 
 function checkDatabase() {
-  console.log('checking db');
+  console.log('check db invoked');
 
   let transaction = db.transaction(['BudgetStore'], 'readwrite');
 
@@ -32,7 +32,6 @@ function checkDatabase() {
   const getAll = store.getAll();
 
   getAll.onsuccess = function () {
-
     if (getAll.result.length > 0) {
       fetch('/api/transaction/bulk', {
         method: 'POST',
@@ -44,15 +43,13 @@ function checkDatabase() {
       })
         .then((response) => response.json())
         .then((res) => {
-
           if (res.length !== 0) {
-
             transaction = db.transaction(['BudgetStore'], 'readwrite');
 
             const currentStore = transaction.objectStore('BudgetStore');
 
             currentStore.clear();
-            console.log('Clearing');
+            console.log('Clearing store 🧹');
           }
         });
     }
@@ -64,19 +61,18 @@ request.onsuccess = function (e) {
   db = e.target.result;
 
   if (navigator.onLine) {
-    console.log('Backend online');
+    console.log('Backend online! 🗄️');
     checkDatabase();
   }
 };
 
 const saveRecord = (record) => {
-  console.log('Saveing record');
-
+  console.log('Save record invoked');
   const transaction = db.transaction(['BudgetStore'], 'readwrite');
 
   const store = transaction.objectStore('BudgetStore');
 
   store.add(record);
-}
+};
 
 window.addEventListener('online', checkDatabase);
